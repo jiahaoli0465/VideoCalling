@@ -4,9 +4,9 @@ import { RoomContext } from "../context/RoomContext";
 
 export const Room = () => {
   const { roomId } = useParams<{ roomId: string }>();
-  const { ws } = React.useContext(RoomContext);
+  const { ws, me } = React.useContext(RoomContext);
   useEffect(() => {
-    ws.emit("join-room", { roomId: roomId });
+    if (me) ws.emit("join-room", { roomId: roomId, peerId: me._id });
   }, [roomId]);
 
   return <div>Room Id: {roomId}</div>;
